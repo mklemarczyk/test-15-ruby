@@ -1,8 +1,8 @@
 require 'math'
 
-RSpec.describe Bowling, "#done" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
+RSpec.describe Vector do
+	context "with (2,3,4)" do
+		it "checks if initialized correctly" do
 			v = Vector.new(2,3,4)
 			
 			expect(v.x).to eq 2
@@ -12,9 +12,9 @@ RSpec.describe Bowling, "#done" do
 	end
 end
 
-RSpec.describe Bowling, "#done" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
+RSpec.describe Vector do
+	context "with (4,0,0)" do
+		it "checks if length computes correctly" do
 			v = Vector.new(4,0,0)
 			l = v.length()
 			
@@ -23,23 +23,23 @@ RSpec.describe Bowling, "#done" do
 	end
 end
 
-RSpec.describe Bowling, "#done" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
+RSpec.describe Vector do
+	context "with (2,3,4)" do
+		it "checks if normalize computes correctly" do
 			v = Vector.new(2,3,4)
 			l1 = v.length()
 			v = v.normalize()
 			l2 = v.length()
 			
-			expect(l1).to ne 1
+			expect(l1).not_to eq 1
 			expect(l2).to eq 1
 		end
 	end
 end
 
-RSpec.describe Bowling, "#done" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
+RSpec.describe Vector do
+	context "with (2,3,4)" do
+		it "checks if negate computes correctly" do
 			v = Vector.new(2,3,4).negate()
 			
 			expect(v.x).to eq -2
@@ -49,9 +49,9 @@ RSpec.describe Bowling, "#done" do
 	end
 end
 
-RSpec.describe Bowling, "#done" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
+RSpec.describe Vector do
+	context "with v1=(0,0,0) v2=(0,0,0) v3=(0,1,0)" do
+		it "checks if equals works" do
 			v1 = Vector.new(0,0,0)
 			v2 = Vector.new(0,0,0)
 			v3 = Vector.new(0,1,0)
@@ -63,9 +63,9 @@ RSpec.describe Bowling, "#done" do
 	end
 end
 
-RSpec.describe Bowling, "#done" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
+RSpec.describe Vector do
+	context "with v1=(2,3,4) v2=(8,11,13)" do
+		it "checks if vector add operation works" do
 			v1 = Vector.new(2,3,4)
 			v2 = Vector.new(8,11,13)
 			v = v1.add(v2)
@@ -77,9 +77,9 @@ RSpec.describe Bowling, "#done" do
 	end
 end
 
-RSpec.describe Bowling, "#done" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
+RSpec.describe Vector do
+	context "with v1=(2,3,4) v2=(8,11,13)" do
+		it "checks if vector subtract operation works" do
 			v1 = Vector.new(2,3,4)
 			v2 = Vector.new(8,11,13)
 			v = v1.subtract(v2)
@@ -87,226 +87,6 @@ RSpec.describe Bowling, "#done" do
 			expect(v.x).to eq -6
 			expect(v.y).to eq -8
 			expect(v.z).to eq -9
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
-		end
-	end
-end
-
-RSpec.describe Bowling, "#score" do
-	context "with no strikes or spares" do
-		if "sums the pin count for each roll" do
-			v = Vector.new(0,0)
-			
-			expect(v.x).to eq 0
-			expect(v.y).to eq 0
 		end
 	end
 end
