@@ -21,7 +21,7 @@ class Vector
 	end
 	def normalize()
 		factor = 1 / self.length()
-		self.multiply(factor, factor, factor)
+		self.multiply(Vector.new(factor, factor, factor))
 	end
 	def negate()
 		x = -self.x
