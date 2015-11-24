@@ -17,7 +17,7 @@ class Vector
 		@z
 	end
 	def length()
-		sqrt(self.x * self.x + self.y * self.y + self.z * self.z);
+		Math.sqrt(self.x * self.x + self.y * self.y + self.z * self.z);
 	end
 	def normalize()
 		factor = 1 / self.length()
