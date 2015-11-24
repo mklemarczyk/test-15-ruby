@@ -57,21 +57,21 @@ class Vector
 		Vector.new(x,y,z)
 	end
 	def min(vector)
-		x = (value1.X < value2.X ? value1.X : value2.X);
-		y = (value1.Y < value2.Y ? value1.Y : value2.Y);
-		z = (value1.Z < value2.Z ? value1.Z : value2.Z);
+		x = (self.x < vector.x ? self.x : vector.x);
+		y = (self.y < vector.y ? self.y : vector.y);
+		z = (self.z < vector.z ? self.z : vector.z);
 		Vector.new(x,y,z)
 	end
 	def max(vector)
-		x = (value1.X > value2.X ? value1.X : value2.X);
-		y = (value1.Y > value2.Y ? value1.Y : value2.Y);
-		z = (value1.Z > value2.Z ? value1.Z : value2.Z);
+		x = (self.x > vector.x ? self.x : vector.x);
+		y = (self.y > vector.y ? self.y : vector.y);
+		z = (self.z > vector.z ? self.z : vector.z);
 		Vector.new(x,y,z)
 	end
 	def cross(vector)
-		x = vector1.Y * vector2.Z - vector1.Z * vector2.Y;
-		y = vector1.Z * vector2.X - vector1.X * vector2.Z;
-		z = vector1.X * vector2.Y - vector1.Y * vector2.X;
+		x = self.y * vector.z - self.z * vector.y;
+		y = self.z * vector.x - self.x * vector.z;
+		z = self.x * vector.y - self.y * vector.x;
 		Vector.new(x,y,z)
 	end
 	def reflect(normal)
@@ -91,9 +91,9 @@ class Vector
 		self.x * vector.x + self.y * vector.y + self.z * vector.z
 	end
 	def distance(vector)
-		x = self.X - value.X;
-		y = self.Y - value.Y;
-		z = self.Z - value.Z;
+		x = self.x - vector.x;
+		y = self.y - vector.y;
+		z = self.z - vector.z;
 		single = x * x + y * y + z * z;
 		Math.sqrt(single)
 	end
