@@ -75,7 +75,7 @@ class Vector
 		Vector.new(x,y,z)
 	end
 	def reflect(normal)
-		d2 = 2f * self.dot(normal)
+		d2 = 2 * self.dot(normal)
 		x = self.x - d2 * normal.x;
 		y = self.y - d2 * normal.y;
 		z = self.z - d2 * normal.z;
