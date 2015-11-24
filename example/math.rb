@@ -1,9 +1,20 @@
 class Vector
 	@x
 	@y
-	def initialize(x, y)
+	@z
+	def initialize(x, y, z)
 		@x = x
 		@y = y
+		@z = z
+	end
+	def x()
+		@x
+	end
+	def y()
+		@y
+	end
+	def z()
+		@z
 	end
 	def length()
 		sqrt(self.x * self.x + self.y * self.y + self.z * self.z);
