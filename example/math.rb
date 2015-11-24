@@ -91,11 +91,11 @@ class Vector
 		self.x * vector.x + self.y * vector.y + self.z * vector.z
 	end
 	def distance(vector)
-			float x = value1.X - value2.X;
-			float y = value1.Y - value2.Y;
-			float z = value1.Z - value2.Z;
-			float single = x * x + y * y + z * z;
-			return (float)Math.Sqrt((double)single);
+		x = self.X - value.X;
+		y = self.Y - value.Y;
+		z = self.Z - value.Z;
+		single = x * x + y * y + z * z;
+		Math.sqrt(single)
 	end
 end
 
