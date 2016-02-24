@@ -9,6 +9,8 @@ public class Nwd {
 			throw new Exception("a nie moze wynosic zero, zero nie ma dzielnikow");
 		if (b == 0)
 			throw new Exception("b nie moze wynosic zero, zero nie ma dzielnikow");
+		this.a = a;
+		this.b = b;
 	}
 
 	public int policz(){

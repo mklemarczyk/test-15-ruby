@@ -1,4 +1,4 @@
-package ug.lab.zad1;
+package ug.lab.zad2;
 
 import static org.junit.Assert.*;
 import org.junit.*;
