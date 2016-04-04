@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project1
-{
-    public class Class1
-    {
-    }
+namespace Project1.Devices {
+	public class RamMemory : BaseDevice {
+		public int speed;
+		public int capacity;
+	}
 }
