@@ -1,4 +1,18 @@
-Scenario: Test delete leaf
+Scenario: Test delete root (leaf)
+When add a number 0
+And delete a number 0
+And getting number
+Then operation should throw an exception
+
+Scenario: Test delete lower (leaf)
+When add a number 0
+And add a number -10
+And delete a number -10
+Then root should be equal to 0
+And left child should be empty
+And right child should be empty
+
+Scenario: Test delete greather (leaf)
 When add a number 0
 And add a number 10
 And delete a number 10

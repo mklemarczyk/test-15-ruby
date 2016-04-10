@@ -107,6 +107,11 @@ public class MySteps implements CandidateSteps{
 		assertFalse(tree.moveRight());
 	}
 
+	@When("delete a number $n")
+	public void whenDeleteANumber(@Named("n") int n) {
+		tree.delete(n);
+	}
+
 	public List<StepCandidate> listCandidates() {
 		// TODO Auto-generated method stub
 		return null;
