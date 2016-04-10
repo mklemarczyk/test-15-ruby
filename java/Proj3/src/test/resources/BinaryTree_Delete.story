@@ -1,26 +1,36 @@
-Scenario: Test add
-When add a number 2
-Then root should be equal to 2
+Scenario: Test delete leaf
+When add a number 0
+And add a number 10
+And delete a number 10
+Then root should be equal to 0
 And left child should be empty
 And right child should be empty
 
-Scenario: Test add equals
-When add a number 2
-When add a number 2
-Then root should be equal to 2
-And left child should be equal to 2
+Scenario: Test delete inner node
+When add a number 0
+And add a number 10
+And add a number -10
+And add a number -15
+And add a number -5
+And add a number 15
+And add a number 5
+And delete a number 10
+And navigate to right child
+Then root should be equal to 0
+And left child should be empty
 And right child should be empty
 
-Scenario: Test add greater
-When add a number 2
-When add a number 5
-Then root should be equal to 2
-And left child should be empty
-And right child should be equal to 5
 
-Scenario: Test add lower
-When add a number 2
-When add a number -3
-Then root should be equal to 2
-And left child should be equal to -3
+Scenario: Test delete root
+When add a number 0
+And add a number 10
+And add a number -10
+And add a number -15
+And add a number -5
+And add a number 15
+And add a number 5
+And delete a number 0
+And navigate to right child
+Then root should be equal to 0
+And left child should be empty
 And right child should be empty

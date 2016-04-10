@@ -86,6 +86,24 @@ public class BinaryTree implements IBinaryTree {
 		if(root != null){
 			TreeNode iterator = root;
 			
+			while (iterator.number != n){
+				if(iterator.number < n){
+					if(iterator.rightChild != null){
+						iterator = iterator.rightChild;
+					}else{
+						return false;
+					}
+				}else{
+					if(iterator.leftChild != null){
+						iterator = iterator.leftChild;
+					}else{
+						return false;
+					}
+				}
+			}
+			
+			// HOW TO REMOVE?
+			
 		}
 		return false;
 	}
