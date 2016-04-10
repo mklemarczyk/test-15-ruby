@@ -1,3 +1,7 @@
+Scenario: Test delete from empty tree
+When delete a number 0
+Then operation should return a boolean false
+
 Scenario: Test delete root (leaf)
 When add a number 0
 And delete a number 0

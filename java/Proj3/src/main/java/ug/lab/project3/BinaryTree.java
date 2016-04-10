@@ -105,7 +105,6 @@ public class BinaryTree implements IBinaryTree {
 			if(iterator.leftChild == null && iterator.rightChild == null){
 				if(iterator.parent == null){
 					root = null;
-					iterator.parent = null;
 					return true;
 				} else {
 					if(iterator.parent.leftChild == iterator){
