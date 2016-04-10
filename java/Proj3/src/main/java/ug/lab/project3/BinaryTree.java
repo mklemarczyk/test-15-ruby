@@ -43,6 +43,8 @@ public class BinaryTree implements IBinaryTree {
 			if(current.parent != null){
 				current = current.parent;
 				return true;
+			}else{
+				return false;
 			}
 		}
 		return false;
@@ -57,7 +59,26 @@ public class BinaryTree implements IBinaryTree {
 			current = newNode;
 		}else{
 			TreeNode iterator = root;
-			
+			boolean inserted = false;
+			while(!inserted){
+				if(iterator.number < n){
+					if(iterator.rightChild != null){
+						iterator = iterator.rightChild;
+					}else{
+						iterator.rightChild = newNode;
+						newNode.parent = iterator;
+						inserted = true;
+					}
+				}else{
+					if(iterator.leftChild != null){
+						iterator = iterator.leftChild;
+					}else{
+						iterator.leftChild = newNode;
+						newNode.parent = iterator;
+						inserted = true;
+					}
+				}
+			}
 		}
 	}
 

@@ -1,6 +1,7 @@
 package ug.lab.project3;
 
 import static org.junit.Assert.*;
+import static org.junit.matchers.JUnitMatchers.*;
 
 import java.util.List;
 
@@ -34,10 +35,13 @@ public class MySteps implements CandidateSteps{
 	}
 	
 	@Then("operation should throw an exception")
-	public void thenOperationShouldExceptionFalse() {
-		if(lastOperationResult == null){
-			fail("Nie otrzymano zadnego wyjatku.");
-		}
+	public void thenOperationShouldThrowAnException() {
+		assertNotNull(lastOperationException);
+	}
+
+	@Then("operation should not throw an exception")
+	public void thenOperationShouldNotThrowAnException() {
+		assertNull(lastOperationException);
 	}
 
 	@When("navigate to parent")
@@ -57,12 +61,41 @@ public class MySteps implements CandidateSteps{
 
 	@Then("operation should return $value")
 	public void thenOperationShouldReturn(@Named("value") boolean value){
-		if(lastOperationResult == null){
-			fail("Nie uruchomiono zadnej metody.");
-		}
-		if(lastOperationResult != value){
-			fail("Oczekiwano innego stanu");
-		}
+		assertEquals(value, lastOperationResult);
+	}
+
+	@When("add a number $n")
+	public void whenAddANumber(@Named("n") int n) {
+		tree.add(n);
+	}
+
+	@Then("root should be equal to $n")
+	public void thenRootShouldBeEqualTo(@Named("n") int n) {
+		assertEquals(n, tree.getNumber());
+	}
+
+	@Then("left child should be equal to $n")
+	public void thenLeftChildShouldBeEqualTo(@Named("n") int n) {
+		assertTrue(tree.moveLeft());
+		assertEquals(n, tree.getNumber());
+		assertTrue(tree.moveUp());
+	}
+
+	@Then("right child should be equal to $n")
+	public void thenRightChildShouldBeEqualTo(@Named("n") int n) {
+		assertTrue(tree.moveRight());
+		assertEquals(n, tree.getNumber());
+		assertTrue(tree.moveUp());
+	}
+
+	@Then("left child should be empty")
+	public void thenLeftChildShouldBeEmpty() {
+		assertFalse(tree.moveLeft());
+	}
+
+	@Then("right child should be empty")
+	public void thenRightChildShouldBeEmpty() {
+		assertFalse(tree.moveRight());
 	}
 
 	public List<StepCandidate> listCandidates() {
