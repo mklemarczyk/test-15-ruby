@@ -105,20 +105,37 @@ public class BinaryTree implements IBinaryTree {
 			if(iterator.leftChild == null && iterator.rightChild == null){
 				if(iterator.parent == null){
 					root = null;
+					current = root;
 					return true;
 				} else {
 					if(iterator.parent.leftChild == iterator){
 						iterator.parent.leftChild = null;
-						iterator.parent = null;
-						return true;
 					} else {
 						iterator.parent.rightChild = null;
-						iterator.parent = null;
-						return true;
 					}
+					iterator.parent = null;
+					current = root;
+					return true;
 				}
 			}else{
-				// HOW TO REMOVE?
+				if(iterator.leftChild == null){
+					if(iterator.parent == null){
+						root = iterator.rightChild;
+						root.parent = null;
+					}else{
+						if(iterator.parent.leftChild == iterator){
+							iterator.parent.leftChild = iterator.rightChild;
+							iterator.parent.leftChild.parent = iterator.parent;
+						} else {
+							iterator.parent.rightChild = iterator.rightChild;
+							iterator.parent.rightChild.parent = iterator.parent;
+						}
+					}
+					iterator.rightChild = null;
+					iterator.parent = null;
+					current = root;
+					return true;
+				}
 			}
 		}
 		return false;

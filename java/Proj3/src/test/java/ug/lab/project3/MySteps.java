@@ -1,15 +1,10 @@
 package ug.lab.project3;
 
 import static org.junit.Assert.*;
-import static org.junit.matchers.JUnitMatchers.*;
-
-import java.util.List;
 
 import org.jbehave.core.annotations.*;
-import org.jbehave.core.configuration.Configuration;
-import org.jbehave.core.steps.*;
 
-public class MySteps implements CandidateSteps{
+public class MySteps{
 
 	private Boolean lastOperationResult;
 	private Integer lastOperationNumber;
@@ -110,30 +105,5 @@ public class MySteps implements CandidateSteps{
 	@When("delete a number $n")
 	public void whenDeleteANumber(@Named("n") int n) {
 		lastOperationResult = tree.delete(n);
-	}
-
-	public List<StepCandidate> listCandidates() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<BeforeOrAfterStep> listBeforeOrAfterStories() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<BeforeOrAfterStep> listBeforeOrAfterStory(boolean givenStory) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<BeforeOrAfterStep> listBeforeOrAfterScenario(ScenarioType type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Configuration configuration() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
