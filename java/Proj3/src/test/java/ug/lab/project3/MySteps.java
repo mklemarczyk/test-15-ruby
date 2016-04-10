@@ -12,6 +12,7 @@ import org.jbehave.core.steps.*;
 public class MySteps implements CandidateSteps{
 
 	private Boolean lastOperationResult;
+	private Integer lastOperationNumber;
 	private Exception lastOperationException;
 	private BinaryTree tree;
 
@@ -27,8 +28,10 @@ public class MySteps implements CandidateSteps{
 
 	@When("getting number")
 	public void whenGettingNumber(){
+		lastOperationException = null;
+		lastOperationNumber = null;
 		try{
-			tree.getNumber();
+			lastOperationNumber = tree.getNumber();
 		}catch(Exception ex){
 			lastOperationException = ex;
 		}
@@ -42,6 +45,12 @@ public class MySteps implements CandidateSteps{
 	@Then("operation should not throw an exception")
 	public void thenOperationShouldNotThrowAnException() {
 		assertNull(lastOperationException);
+	}
+
+	@Then("operation should return a number $n")
+	public void thenOperationShouldReturnNumber(@Named("n") int n) {
+		assertNotNull(lastOperationNumber);
+		assertEquals(n, lastOperationNumber.longValue());
 	}
 
 	@When("navigate to parent")
@@ -59,7 +68,7 @@ public class MySteps implements CandidateSteps{
 		lastOperationResult = tree.moveRight();
 	}
 
-	@Then("operation should return $value")
+	@Then("operation should return a boolean $value")
 	public void thenOperationShouldReturn(@Named("value") boolean value){
 		assertEquals(value, lastOperationResult);
 	}
