@@ -1,9 +1,7 @@
 package com.example.seleniumdemo;
 
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import org.junit.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -16,7 +14,7 @@ public class Project4 {
 	@Before
 	public void driverSetup() {
 		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 	}
 
 	@Test
@@ -51,41 +49,186 @@ public class Project4 {
 
 	@Test
 	public void testSendValidPoll() {
-		String parentWindow;
-		String childWindow;
-		driver.get("https://inf.ug.edu.pl/");
-		parentWindow = driver.getWindowHandle();
-		driver.findElement(By.linkText("Poczta")).click();
+		driver.get("https://docs.google.com/forms/d/1Uf2LJbpk3kxNaWWWuqsGwY3PRO1XBatlm6Vjx5wi72k/viewform");
 
-		Set<String> windows = driver.getWindowHandles();
-		windows.remove(parentWindow);
-		childWindow = windows.iterator().next();
-		driver.switchTo().window(childWindow);
+		Ankieta ankieta = new Ankieta(driver);
 
-		Login login = new Login(driver);
-		login.login("", "");
-		assertEquals("BŁĄD:\nBŁĄD: Połączenie pominięte przez serwer IMAP.\nQuery: LOGOUT", driver.findElement(By.tagName("body")).getText());
+		ankieta.maska_1.click();
+		ankieta.nick.sendKeys("Test");
+		ankieta.sprawdzilo_tak.click();
+		ankieta.efekt_wygladzenia.click();
+		ankieta.wlosy_krecone.click();
+		ankieta.porpwatosc_srednia.click();
+		ankieta.wlosyg_srednie.click();
+		ankieta.additional_info.sendKeys("Nic nowego");
+
+		ankieta.sendButton.click();
+
+		Ankieta wyslana = new Ankieta(driver);
+
+		assertNotNull(wyslana.repeatButton);
+		assertNotNull(wyslana.responseMessage);
+		assertEquals("Twoja odpowiedź została zapisana.", wyslana.responseMessage.getText());
 	}
 
 	@Test
-	public void testWithTryLoginWithWrongPassword() {
-		String parentWindow;
-		String childWindow;
-		driver.get("https://inf.ug.edu.pl/");
-		parentWindow = driver.getWindowHandle();
-		driver.findElement(By.linkText("Poczta")).click();
+	public void testSendPoll_WithoutMaska() {
+		driver.get("https://docs.google.com/forms/d/1Uf2LJbpk3kxNaWWWuqsGwY3PRO1XBatlm6Vjx5wi72k/viewform");
 
-		Set<String> windows = driver.getWindowHandles();
-		windows.remove(parentWindow);
+		Ankieta ankieta = new Ankieta(driver);
 
-		assertEquals(1, windows.size());
+		ankieta.nick.sendKeys("Test");
+		ankieta.sprawdzilo_tak.click();
+		ankieta.efekt_wygladzenia.click();
+		ankieta.wlosy_krecone.click();
+		ankieta.porpwatosc_srednia.click();
+		ankieta.wlosyg_srednie.click();
+		ankieta.additional_info.sendKeys("Nic nowego");
 
-		childWindow = windows.iterator().next();
-		driver.switchTo().window(childWindow);
+		ankieta.sendButton.click();
 
-		Login login = new Login(driver);
-		login.login("mkleamrczyk", "qwertyuiop");
-		assertEquals("BŁĄD:\nBŁĄD: Połączenie pominięte przez serwer IMAP.\nQuery: LOGOUT", driver.findElement(By.tagName("body")).getText());
+		assertTrue(driver.findElement(By.tagName("body")).getText().contains("Odpowiedź na to pytanie jest wymagana"));
+	}
+
+	@Test
+	public void testSendPoll_WithoutNick() {
+		driver.get("https://docs.google.com/forms/d/1Uf2LJbpk3kxNaWWWuqsGwY3PRO1XBatlm6Vjx5wi72k/viewform");
+
+		Ankieta ankieta = new Ankieta(driver);
+
+		ankieta.maska_1.click();
+		ankieta.sprawdzilo_tak.click();
+		ankieta.efekt_wygladzenia.click();
+		ankieta.wlosy_krecone.click();
+		ankieta.porpwatosc_srednia.click();
+		ankieta.wlosyg_srednie.click();
+		ankieta.additional_info.sendKeys("Nic nowego");
+
+		ankieta.sendButton.click();
+
+		assertTrue(driver.findElement(By.tagName("body")).getText().contains("Odpowiedź na to pytanie jest wymagana"));
+	}
+
+	@Test
+	public void testSendPoll_WithoutSprawdzilo() {
+		driver.get("https://docs.google.com/forms/d/1Uf2LJbpk3kxNaWWWuqsGwY3PRO1XBatlm6Vjx5wi72k/viewform");
+
+		Ankieta ankieta = new Ankieta(driver);
+
+		ankieta.maska_1.click();
+		ankieta.nick.sendKeys("Test");
+		ankieta.efekt_wygladzenia.click();
+		ankieta.wlosy_krecone.click();
+		ankieta.porpwatosc_srednia.click();
+		ankieta.wlosyg_srednie.click();
+		ankieta.additional_info.sendKeys("Nic nowego");
+
+		ankieta.sendButton.click();
+
+		assertTrue(driver.findElement(By.tagName("body")).getText().contains("Odpowiedź na to pytanie jest wymagana"));
+	}
+
+	@Test
+	public void testSendPoll_WithoutEfekt() {
+		driver.get("https://docs.google.com/forms/d/1Uf2LJbpk3kxNaWWWuqsGwY3PRO1XBatlm6Vjx5wi72k/viewform");
+
+		Ankieta ankieta = new Ankieta(driver);
+
+		ankieta.maska_1.click();
+		ankieta.nick.sendKeys("Test");
+		ankieta.sprawdzilo_tak.click();
+		ankieta.wlosy_krecone.click();
+		ankieta.porpwatosc_srednia.click();
+		ankieta.wlosyg_srednie.click();
+		ankieta.additional_info.sendKeys("Nic nowego");
+
+		ankieta.sendButton.click();
+
+		Ankieta wyslana = new Ankieta(driver);
+
+		assertNotNull(wyslana.repeatButton);
+		assertNotNull(wyslana.responseMessage);
+		assertEquals("Twoja odpowiedź została zapisana.", wyslana.responseMessage.getText());
+	}
+
+	@Test
+	public void testSendPoll_WithoutTypWlosow() {
+		driver.get("https://docs.google.com/forms/d/1Uf2LJbpk3kxNaWWWuqsGwY3PRO1XBatlm6Vjx5wi72k/viewform");
+
+		Ankieta ankieta = new Ankieta(driver);
+
+		ankieta.maska_1.click();
+		ankieta.nick.sendKeys("Test");
+		ankieta.sprawdzilo_tak.click();
+		ankieta.efekt_wygladzenia.click();
+		ankieta.porpwatosc_srednia.click();
+		ankieta.wlosyg_srednie.click();
+		ankieta.additional_info.sendKeys("Nic nowego");
+
+		ankieta.sendButton.click();
+
+		assertTrue(driver.findElement(By.tagName("body")).getText().contains("Odpowiedź na to pytanie jest wymagana"));
+	}
+
+	@Test
+	public void testSendPoll_WithoutPoprawnosc() {
+		driver.get("https://docs.google.com/forms/d/1Uf2LJbpk3kxNaWWWuqsGwY3PRO1XBatlm6Vjx5wi72k/viewform");
+
+		Ankieta ankieta = new Ankieta(driver);
+
+		ankieta.maska_1.click();
+		ankieta.nick.sendKeys("Test");
+		ankieta.sprawdzilo_tak.click();
+		ankieta.efekt_wygladzenia.click();
+		ankieta.wlosy_krecone.click();
+		ankieta.wlosyg_srednie.click();
+		ankieta.additional_info.sendKeys("Nic nowego");
+
+		ankieta.sendButton.click();
+
+		assertTrue(driver.findElement(By.tagName("body")).getText().contains("Odpowiedź na to pytanie jest wymagana"));
+	}
+
+	@Test
+	public void testSendPoll_WithoutWlosyGrubosc() {
+		driver.get("https://docs.google.com/forms/d/1Uf2LJbpk3kxNaWWWuqsGwY3PRO1XBatlm6Vjx5wi72k/viewform");
+
+		Ankieta ankieta = new Ankieta(driver);
+
+		ankieta.maska_1.click();
+		ankieta.nick.sendKeys("Test");
+		ankieta.sprawdzilo_tak.click();
+		ankieta.efekt_wygladzenia.click();
+		ankieta.wlosy_krecone.click();
+		ankieta.porpwatosc_srednia.click();
+		ankieta.additional_info.sendKeys("Nic nowego");
+
+		ankieta.sendButton.click();
+
+		assertTrue(driver.findElement(By.tagName("body")).getText().contains("Odpowiedź na to pytanie jest wymagana"));
+	}
+
+	@Test
+	public void testSendPoll_WithoutAdditionalInfoMaska() {
+		driver.get("https://docs.google.com/forms/d/1Uf2LJbpk3kxNaWWWuqsGwY3PRO1XBatlm6Vjx5wi72k/viewform");
+
+		Ankieta ankieta = new Ankieta(driver);
+
+		ankieta.maska_1.click();
+		ankieta.nick.sendKeys("Test");
+		ankieta.sprawdzilo_tak.click();
+		ankieta.efekt_wygladzenia.click();
+		ankieta.wlosy_krecone.click();
+		ankieta.porpwatosc_srednia.click();
+		ankieta.wlosyg_srednie.click();
+
+		ankieta.sendButton.click();
+
+		Ankieta wyslana = new Ankieta(driver);
+
+		assertNotNull(wyslana.repeatButton);
+		assertNotNull(wyslana.responseMessage);
+		assertEquals("Twoja odpowiedź została zapisana.", wyslana.responseMessage.getText());
 	}
 
 	@After
