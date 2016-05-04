@@ -106,6 +106,7 @@ public class Project4 {
 
 		ankieta.sendButton.click();
 
+		driver.findElement(By.tagName("body")).click();
 		assertTrue(driver.findElement(By.tagName("body")).getText().contains("Odpowiedź na to pytanie jest wymagana"));
 	}
 
