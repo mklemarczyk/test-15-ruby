@@ -39,7 +39,7 @@ public class InfoTypeTest {
 
 		InfoTypeIndexPage indexPage = new InfoTypeIndexPage(driver);
 
-		assertEquals(0, indexPage.tableEntries.size());
+		assertEquals("No results found.", indexPage.tableEntries.get(1).getText());
 	}
 
 	@Test
@@ -153,11 +153,16 @@ public class InfoTypeTest {
 		homePageAfter.infoTypesButton.click();
 
 		InfoTypeIndexPage indexPage = new InfoTypeIndexPage(driver);
-		InfoTypeRow row = new InfoTypeRow(indexPage.tableEntries.get(0));
+		InfoTypeRow row = new InfoTypeRow(indexPage.tableEntries.get(1));
 		row.deleteButton.click();
 
 		Alert alert = driver.switchTo().alert();
 		alert.dismiss();
+
+		InfoTypeIndexPage indexPageAfter = new InfoTypeIndexPage(driver);
+		InfoTypeRow rowAfter = new InfoTypeRow(indexPageAfter.tableEntries.get(1));
+
+		assertEquals("Processor speed", rowAfter.nameText.getText());
 	}
 
 	@Test
@@ -180,6 +185,10 @@ public class InfoTypeTest {
 
 		Alert alert = driver.switchTo().alert();
 		alert.accept();
+
+		InfoTypeIndexPage indexPageAfter = new InfoTypeIndexPage(driver);
+
+		assertEquals("No results found.", indexPageAfter.tableEntries.get(1).getText());
 	}
 
 	@Before

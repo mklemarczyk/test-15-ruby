@@ -14,6 +14,8 @@ import org.openqa.selenium.WebElement;
  */
 public class InfoTypeRow {
 
+	public WebElement nameText;
+
 	public WebElement viewButton;
 
 	public WebElement updateButton;
@@ -21,6 +23,7 @@ public class InfoTypeRow {
 	public WebElement deleteButton;
 
 	public InfoTypeRow(WebElement element) {
+		nameText = element.findElement(By.xpath("//td[2]"));
 		viewButton = element.findElement(By.xpath("//a[@title='View']"));
 		updateButton = element.findElement(By.xpath("//a[@title='Update']"));
 		deleteButton = element.findElement(By.xpath("//a[@title='Delete']"));
