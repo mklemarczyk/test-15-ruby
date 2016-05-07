@@ -16,22 +16,34 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class LoginPage {
 
-	@FindBy(id = "login_username")
+	@FindBy(id = "loginform-username")
 	private WebElement loginField;
 
-	@FindBy(id = "secretkey")
+	@FindBy(id = "loginform-password")
 	private WebElement passwordField;
 
-	@FindBy(id = "smsubmit")
+	@FindBy(id = "loginform-rememberme")
+	private WebElement rememberCheckbox;
+
+	@FindBy(className = "btn-primary")
 	private WebElement loginButton;
+
+	@FindBy(css = ".field-loginform-username.has-error .help-block")
+	public WebElement loginFieldError;
+
+	@FindBy(css = ".field-loginform-password.has-error .help-block")
+	public WebElement passwordFieldError;
 
 	public LoginPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
 	}
 
-	public void login(String login, String password) {
+	public void login(String login, String password, Boolean remember) {
 		loginField.sendKeys(login);
 		passwordField.sendKeys(password);
+		if (rememberCheckbox.isSelected() != remember) {
+			rememberCheckbox.click();
+		}
 		loginButton.click();
 	}
 

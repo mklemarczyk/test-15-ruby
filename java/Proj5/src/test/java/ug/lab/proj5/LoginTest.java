@@ -12,6 +12,7 @@ import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ug.lab.proj5.pages.HomePage;
+import ug.lab.proj5.pages.LoginPage;
 
 /**
  *
@@ -37,8 +38,14 @@ public class LoginTest {
 		driver.get("http://zsm-eq.azurewebsites.net/");
 
 		HomePage homePage = new HomePage(driver);
+		homePage.loginButton.click();
 
-		assertEquals("Poczta inf.ug.edu.pl - Logowanie", driver.getTitle());
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login("", "", false);
+
+		LoginPage loginPageAfter = new LoginPage(driver);
+		assertEquals("Username cannot be blank.", loginPageAfter.loginFieldError.getText());
+		assertEquals("Password cannot be blank.", loginPageAfter.passwordFieldError.getText());
 	}
 
 	@Test
@@ -46,8 +53,13 @@ public class LoginTest {
 		driver.get("http://zsm-eq.azurewebsites.net/");
 
 		HomePage homePage = new HomePage(driver);
+		homePage.loginButton.click();
 
-		assertEquals("Poczta inf.ug.edu.pl - Logowanie", driver.getTitle());
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login("admin", "qwertyui", false);
+
+		LoginPage loginPageAfter = new LoginPage(driver);
+		assertEquals("Incorrect username or password.", loginPageAfter.passwordFieldError.getText());
 	}
 
 	@Test
@@ -55,8 +67,13 @@ public class LoginTest {
 		driver.get("http://zsm-eq.azurewebsites.net/");
 
 		HomePage homePage = new HomePage(driver);
+		homePage.loginButton.click();
 
-		assertEquals("Poczta inf.ug.edu.pl - Logowanie", driver.getTitle());
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login("admin", "admin", false);
+
+		HomePage homePageAfter = new HomePage(driver);
+		assertNotNull(homePageAfter.logoutButton);
 	}
 
 	@Before
