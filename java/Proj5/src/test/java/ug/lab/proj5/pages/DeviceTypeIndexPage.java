@@ -16,7 +16,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class DeviceTypeIndexPage {
 
-	@FindBy(linkText = "Home")
+	@FindBy(linkText = "Create Device Type")
 	public WebElement createButton;
 
 	public DeviceTypeIndexPage(WebDriver driver) {

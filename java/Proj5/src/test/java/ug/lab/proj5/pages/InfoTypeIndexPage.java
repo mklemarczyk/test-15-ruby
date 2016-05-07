@@ -16,7 +16,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class InfoTypeIndexPage {
 
-	@FindBy(linkText = "Home")
+	@FindBy(linkText = "Create Info Type")
 	public WebElement createButton;
 
 	public InfoTypeIndexPage(WebDriver driver) {
