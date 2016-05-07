@@ -25,7 +25,7 @@ public class HomePage {
 	@FindBy(linkText = "About")
 	public WebElement aboutButton;
 
-	@FindBy(linkText = "Logout (admin)")
+	@FindBy(partialLinkText = "Logout")
 	public WebElement logoutButton;
 
 	@FindBy(linkText = "Equipment")

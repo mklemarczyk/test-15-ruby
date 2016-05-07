@@ -79,7 +79,7 @@ public class LoginTest {
 	@Before
 	public void driverSetup() {
 		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
 	@After

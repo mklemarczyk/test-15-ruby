@@ -7,34 +7,24 @@ package ug.lab.proj5;
 
 import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import org.junit.*;
+import org.junit.runners.MethodSorters;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ug.lab.proj5.pages.HomePage;
-import ug.lab.proj5.pages.LoginPage;
+import ug.lab.proj5.pages.*;
 
 /**
  *
  * @author mklem
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class InfoTypeTest {
 
 	protected WebDriver driver;
 
 	@Test
-	public void testOpenHomePage() {
-		driver.get("http://zsm-eq.azurewebsites.net/");
-
-		HomePage homePage = new HomePage(driver);
-
-		assertNotNull(homePage.homeButton);
-		assertNotNull(homePage.loginButton);
-		assertNotNull(homePage.aboutButton);
-	}
-
-	@Test
-	public void testWithTryLoginEmpty() {
+	public void tc01_testOpenIndexPage() {
 		driver.get("http://zsm-eq.azurewebsites.net/");
 
 		HomePage homePage = new HomePage(driver);
@@ -44,35 +34,158 @@ public class InfoTypeTest {
 		loginPage.login("admin", "admin", false);
 
 		HomePage homePageAfter = new HomePage(driver);
-		assertNotNull(homePageAfter.logoutButton);
+		homePageAfter.equipmentButton.click();
+		homePageAfter.infoTypesButton.click();
 
-		driver.get("http://zsm-eq.azurewebsites.net/");
+		InfoTypeIndexPage indexPage = new InfoTypeIndexPage(driver);
 
-		assertEquals("Poczta inf.ug.edu.pl - Logowanie", driver.getTitle());
+		assertEquals(0, indexPage.tableEntries.size());
 	}
 
 	@Test
-	public void testWithTryLoginWithWrongPassword() {
+	public void tc02_testAddItem_Empty() {
 		driver.get("http://zsm-eq.azurewebsites.net/");
 
 		HomePage homePage = new HomePage(driver);
+		homePage.loginButton.click();
 
-		assertEquals("Poczta inf.ug.edu.pl - Logowanie", driver.getTitle());
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login("admin", "admin", false);
+
+		HomePage homePageAfter = new HomePage(driver);
+		homePageAfter.equipmentButton.click();
+		homePageAfter.infoTypesButton.click();
+
+		InfoTypeIndexPage indexPage = new InfoTypeIndexPage(driver);
+		indexPage.createButton.click();
+
+		InfoTypeFormPage formPage = new InfoTypeFormPage(driver);
+		formPage.create("");
+
+		assertEquals("Name cannot be blank.", formPage.nameFieldError.getText());
 	}
 
 	@Test
-	public void testWithCorrectPassword() {
+	public void tc03_testAddItem_Valid() {
 		driver.get("http://zsm-eq.azurewebsites.net/");
 
 		HomePage homePage = new HomePage(driver);
+		homePage.loginButton.click();
 
-		assertEquals("Poczta inf.ug.edu.pl - Logowanie", driver.getTitle());
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login("admin", "admin", false);
+
+		HomePage homePageAfter = new HomePage(driver);
+		homePageAfter.equipmentButton.click();
+		homePageAfter.infoTypesButton.click();
+
+		InfoTypeIndexPage indexPage = new InfoTypeIndexPage(driver);
+		indexPage.createButton.click();
+
+		InfoTypeFormPage formPage = new InfoTypeFormPage(driver);
+		formPage.create("Procesor speed");
+
+		InfoTypeDetailPage detailPage = new InfoTypeDetailPage(driver);
+		assertEquals("Procesor speed", detailPage.headerText.getText());
+	}
+
+	@Test
+	public void tc04_testUpdateItem_Empty() {
+		driver.get("http://zsm-eq.azurewebsites.net/");
+
+		HomePage homePage = new HomePage(driver);
+		homePage.loginButton.click();
+
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login("admin", "admin", false);
+
+		HomePage homePageAfter = new HomePage(driver);
+		homePageAfter.equipmentButton.click();
+		homePageAfter.infoTypesButton.click();
+
+		InfoTypeIndexPage indexPage = new InfoTypeIndexPage(driver);
+		InfoTypeRow row = new InfoTypeRow(indexPage.tableEntries.get(0));
+		row.updateButton.click();
+
+		InfoTypeFormPage formPage = new InfoTypeFormPage(driver);
+		formPage.update("");
+
+		assertEquals("Name cannot be blank.", formPage.nameFieldError.getText());
+	}
+
+	@Test
+	public void tc05_testUpdateItem_Valid() {
+		driver.get("http://zsm-eq.azurewebsites.net/");
+
+		HomePage homePage = new HomePage(driver);
+		homePage.loginButton.click();
+
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login("admin", "admin", false);
+
+		HomePage homePageAfter = new HomePage(driver);
+		homePageAfter.equipmentButton.click();
+		homePageAfter.infoTypesButton.click();
+
+		InfoTypeIndexPage indexPage = new InfoTypeIndexPage(driver);
+		InfoTypeRow row = new InfoTypeRow(indexPage.tableEntries.get(0));
+		row.updateButton.click();
+
+		InfoTypeFormPage formPage = new InfoTypeFormPage(driver);
+		formPage.update("Processor speed");
+
+		InfoTypeDetailPage afterDetailPage = new InfoTypeDetailPage(driver);
+		assertEquals("Processor speed", afterDetailPage.headerText.getText());
+	}
+
+	@Test
+	public void tc06_testDeleteItem_Deny() {
+		driver.get("http://zsm-eq.azurewebsites.net/");
+
+		HomePage homePage = new HomePage(driver);
+		homePage.loginButton.click();
+
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login("admin", "admin", false);
+
+		HomePage homePageAfter = new HomePage(driver);
+		homePageAfter.equipmentButton.click();
+		homePageAfter.infoTypesButton.click();
+
+		InfoTypeIndexPage indexPage = new InfoTypeIndexPage(driver);
+		InfoTypeRow row = new InfoTypeRow(indexPage.tableEntries.get(0));
+		row.deleteButton.click();
+
+		Alert alert = driver.switchTo().alert();
+		alert.dismiss();
+	}
+
+	@Test
+	public void tc07_testDeleteItem_Confirm() {
+		driver.get("http://zsm-eq.azurewebsites.net/");
+
+		HomePage homePage = new HomePage(driver);
+		homePage.loginButton.click();
+
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login("admin", "admin", false);
+
+		HomePage homePageAfter = new HomePage(driver);
+		homePageAfter.equipmentButton.click();
+		homePageAfter.infoTypesButton.click();
+
+		InfoTypeIndexPage indexPage = new InfoTypeIndexPage(driver);
+		InfoTypeRow row = new InfoTypeRow(indexPage.tableEntries.get(0));
+		row.deleteButton.click();
+
+		Alert alert = driver.switchTo().alert();
+		alert.accept();
 	}
 
 	@Before
 	public void driverSetup() {
 		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
 	@After

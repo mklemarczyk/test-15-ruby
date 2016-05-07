@@ -5,7 +5,6 @@
  */
 package ug.lab.proj5.pages;
 
-import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,20 +14,19 @@ import org.openqa.selenium.support.PageFactory;
  *
  * @author mklem
  */
-public class InfoTypeIndexPage {
+public class InfoTypeDetailPage {
 
-	@FindBy(linkText = "Create Info Type")
-	public WebElement createButton;
+	@FindBy(linkText = "Update")
+	public WebElement updateButton;
 
-	@FindBy(css = "table tr")
-	public List<WebElement> tableEntries;
+	@FindBy(linkText = "Delete")
+	public WebElement deleteButton;
 
-	public InfoTypeIndexPage(WebDriver driver) {
+	@FindBy(css = ".info-type-view h1")
+	public WebElement headerText;
+
+	public InfoTypeDetailPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
-	}
-
-	public void view(String name) {
-
 	}
 
 }
