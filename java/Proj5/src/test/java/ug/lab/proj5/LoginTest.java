@@ -5,15 +5,12 @@
  */
 package ug.lab.proj5;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.opera.OperaOptions;
 import ug.lab.proj5.pages.HomePage;
 
 /**
@@ -22,8 +19,7 @@ import ug.lab.proj5.pages.HomePage;
  */
 public class LoginTest {
 
-	private WebDriver driver;
-	WebElement element;
+	protected WebDriver driver;
 
 	@Test
 	public void testOpenHomePage() {
@@ -31,7 +27,9 @@ public class LoginTest {
 
 		HomePage homePage = new HomePage(driver);
 
-		assertEquals("Poczta inf.ug.edu.pl - Logowanie", driver.getTitle());
+		assertNotNull(homePage.homeButton);
+		assertNotNull(homePage.loginButton);
+		assertNotNull(homePage.aboutButton);
 	}
 
 	@Test
@@ -65,21 +63,10 @@ public class LoginTest {
 	public void driverSetup() {
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-
-		File file = new File("../libs/operadriver_64.exe");
-		System.setProperty("webdriver.opera.driver", file.getAbsolutePath());
-
-		OperaOptions options = new OperaOptions();
-		options.setBinary("E:/Data/PortableApps/OperaPortable/App/Opera/36.0.2130.32/Opera.exe");
-		//options.setBinary("E:/Data/PortableApps/OperaPortable/OperaPortable.exe");
-
-		driver = new OperaDriver(options);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 	}
 
 	@After
 	public void cleanp() {
-		driver.close();
 		driver.quit();
 	}
 
