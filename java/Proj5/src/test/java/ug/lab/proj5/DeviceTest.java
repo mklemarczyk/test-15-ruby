@@ -12,13 +12,12 @@ import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ug.lab.proj5.pages.HomePage;
-import ug.lab.proj5.pages.LoginPage;
 
 /**
  *
  * @author mklem
  */
-public class InfoTypeTest {
+public class DeviceTest {
 
 	protected WebDriver driver;
 
@@ -38,15 +37,6 @@ public class InfoTypeTest {
 		driver.get("http://zsm-eq.azurewebsites.net/");
 
 		HomePage homePage = new HomePage(driver);
-		homePage.loginButton.click();
-
-		LoginPage loginPage = new LoginPage(driver);
-		loginPage.login("admin", "admin", false);
-
-		HomePage homePageAfter = new HomePage(driver);
-		assertNotNull(homePageAfter.logoutButton);
-
-		driver.get("http://zsm-eq.azurewebsites.net/");
 
 		assertEquals("Poczta inf.ug.edu.pl - Logowanie", driver.getTitle());
 	}
