@@ -1,82 +1,57 @@
 package ug.lab.proj160511.steps;
 
-import static java.lang.Thread.sleep;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.jbehave.core.annotations.*;
-import org.junit.After;
 import static org.junit.Assert.assertEquals;
-import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ug.lab.proj160511.pages.CalcPage;
 
 public class CalcSteps {
 
 	protected WebDriver driver;
 
-	@BeforeScenario
+	@BeforeStory
 	public void beforeEachScenario() {
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
-	@AfterScenario
+	@AfterStory
 	public void afterAnyScenario() {
-		driver.quit();
-	}
-
-	@Before
-	public void setUp() {
-		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	}
-
-	@After
-	public void tearDown() {
 		driver.quit();
 	}
 
 	@When("open calc page")
 	public void whenOpenCalcPage() throws InterruptedException {
-		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
 		driver.get("http://web2.0calc.com/");
-
-		CalcPage calc = new CalcPage(driver);
-		//calc.num2Button.click();
-		//calc.addButton.click();
-		//calc.num5Button.click();
-		//calc.equalsButton.click();
-		// sleep(5000);
-		calc.inputField.sendKeys("2+5");
-		calc.equalsButton.click();
-
-		sleep(5000);
-
-		String tt = calc.inputField.getAttribute("value");
-		assertEquals("1", calc.inputField.getAttribute("value"));
-
-		driver.quit();
 	}
 
-	@When("numbers $x to insert")
-	public void whenNameIsEmpty(@Named("x") List<Integer> x) throws InterruptedException {
-		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	@Given("numbers $x to divide")
+	public void givenNumbersxToDivide(@Named("x") List<String> x) throws InterruptedException {
 		CalcPage calc = new CalcPage(driver);
-		calc.num2Button.click();
-		calc.addButton.click();
-		calc.num5Button.click();
-		calc.equalsButton.click();
-		sleep(1000);
-		assertEquals("1", calc.inputField.getText());
+		for (int i = 0, c = x.size(); i < c; i++) {
+			if (i > 0) {
+				calc.divButton.click();
+			}
+			String number = x.get(i);
+			calc.inputField.sendKeys(number);
+		}
 	}
 
 	@Then("result is $number")
-	public void thenBlankNameErrorShown(@Named("name") String name) {
+	public void thenBlankNameErrorShown(@Named("number") String number) throws InterruptedException {
+		CalcPage calc = new CalcPage(driver);
 
+		calc.equalsButton.click();
+
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.attributeToBe(calc.inputField, "class", ""));
+
+		assertEquals(number, calc.inputField.getAttribute("value"));
 	}
 
 }
