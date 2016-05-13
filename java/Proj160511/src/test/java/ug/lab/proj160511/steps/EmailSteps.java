@@ -1,15 +1,16 @@
 package ug.lab.proj160511.steps;
 
+import static java.lang.Thread.sleep;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
 import org.jbehave.core.annotations.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ug.lab.proj160511.pages.HomePage;
-import ug.lab.proj160511.pages.LoginPage;
+import ug.lab.proj160511.pages.email.*;
+import ug.lab.proj160511.pages.tmpemail.HomePage;
+import ug.lab.proj160511.pages.tmpemail.MailPage;
 
 /**
  *
@@ -19,75 +20,105 @@ public class EmailSteps {
 
 	protected WebDriver driver;
 
-	protected Dictionary<String, String> credentials;
+	protected Dictionary<String, String> variables;
 
-	@BeforeScenario
+	@BeforeStory
 	public void beforeEachScenario() {
-		credentials = new Hashtable<>();
+		variables = new Hashtable<>();
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
-	@AfterScenario
+	@AfterStory
 	public void afterAnyScenario() {
 		driver.quit();
 	}
 
 	@When("open login page")
 	public void whenOpenLoginPage() {
-		driver.get("http://zsm-eq.azurewebsites.net/index.php?r=site%2Flogin");
+		driver.get("https://inf.ug.edu.pl/sq/src/login.php");
 	}
 
 	@Then("login page is shown")
 	public void thenLoginPageIsShown() {
-		LoginPage loginPage = new LoginPage(driver);
-
-		assertNotNull(loginPage.loginField);
-		assertNotNull(loginPage.passwordField);
-		assertNotNull(loginPage.rememberCheckbox);
-		assertNotNull(loginPage.loginButton);
+		assertEquals("Poczta inf.ug.edu.pl - Logowanie", driver.getTitle());
 	}
 
-	@When("$name is empty")
-	public void whenNameIsEmpty(@Named("name") String name) {
-		credentials.put(name, "");
+	@When("open temp mail page")
+	public void whenOpenTempMailPage() {
+		if (variables.get("tmpPage") != null) {
+			driver.get(variables.get("tmpPage"));
+		} else {
+			driver.get("http://10minutemail.com/10MinuteMail/index.html");
+		}
+		HomePage homePage = new HomePage(driver);
+		variables.put("tmpPage", driver.getCurrentUrl());
+		variables.put("to", homePage.addressField.getAttribute("value"));
+	}
+
+	@Then("$n {messages|message} {are|is} present")
+	public void thenMessagesArePresent(@Named("n") int n) throws InterruptedException {
+		HomePage homePage = new HomePage(driver);
+		if (homePage.emails.size() != n + 1) {
+			sleep(10000);
+		}
+		assertEquals(n + 1, homePage.emails.size());
+
 	}
 
 	@When("login button pressed")
 	public void whenLoginButtonPressed() {
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.login(
-				credentials.get("username"),
-				credentials.get("password"),
-				false
+		loginPage.login(variables.get("username"),
+				variables.get("password")
 		);
-
-	}
-
-	@Then("blank $name error shown")
-	public void thenBlankNameErrorShown(@Named("name") String name) {
-		LoginPage loginPage = new LoginPage(driver);
-		if ("username".equals(name)) {
-			assertEquals("Username cannot be blank.", loginPage.loginFieldError.getText());
-		} else if ("password".equals(name)) {
-			assertEquals("Password cannot be blank.", loginPage.passwordFieldError.getText());
-		}
+		variables.remove("username");
+		variables.remove("password");
 	}
 
 	@When("$name is given $value")
 	public void whenNameIsGivenValue(@Named("name") String name, @Named("value") String value) {
-		credentials.put(name, value);
-	}
-
-	@Then("invalid username or password error shown")
-	public void thenInvalidUsernameOrPasswordErrorShown() {
-		LoginPage loginPageAfter = new LoginPage(driver);
-		assertEquals("Incorrect username or password.", loginPageAfter.passwordFieldError.getText());
+		variables.put(name, value);
 	}
 
 	@Then("user is logged")
 	public void thenUserIsLogged() {
-		HomePage homePage = new HomePage(driver);
-		assertNotNull(homePage.logoutButton);
+		IndexPage indexPage = new IndexPage(driver);
+		assertNotNull(indexPage.logoutButton);
+	}
+
+	@When("open new mail page")
+	public void whenOpenNewMailPage() {
+		driver.get("https://inf.ug.edu.pl/sq/src/compose.php?mailbox=INBOX&startMessage=1");
+	}
+
+	@When("send button pressed")
+	public void whenSendButtonPressed() {
+		NewMailPage newMailPage = new NewMailPage(driver);
+		newMailPage.sendMail(
+				variables.get("to"),
+				variables.get("subject"),
+				variables.get("body")
+		);
+		variables.remove("to");
+		variables.remove("subject");
+		variables.remove("body");
+	}
+
+	@Then("email is send")
+	public void thenEmailIsSend() {
+		assertFalse(driver.getCurrentUrl().contains("https://inf.ug.edu.pl/sq/src/compose.php"));
+	}
+
+	@Then("email subject is $subject")
+	public void thenEmailSubjectIs(@Named("subject") String subject) {
+		MailPage mailPage = new MailPage(driver);
+		assertTrue(false);
+	}
+
+	@Then("email body contains $body")
+	public void thenEmailBodyContains(@Named("body") String body) {
+		MailPage mailPage = new MailPage(driver);
+		assertTrue(false);
 	}
 }

@@ -16,7 +16,7 @@ public class OperaEmailSteps extends EmailSteps {
 	@BeforeScenario
 	@Override
 	public void beforeEachScenario() {
-		credentials = new Hashtable<>();
+		variables = new Hashtable<>();
 
 		File file = new File("../libs/operadriver_64.exe");
 		System.setProperty("webdriver.opera.driver", file.getAbsolutePath());
