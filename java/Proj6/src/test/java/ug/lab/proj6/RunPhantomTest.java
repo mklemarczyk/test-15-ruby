@@ -1,4 +1,4 @@
-package ug.lab.proj160511;
+package ug.lab.proj6;
 
 import java.util.*;
 import org.jbehave.core.configuration.Configuration;
@@ -10,11 +10,11 @@ import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.*;
 import org.jbehave.core.steps.ParameterConverters.ParameterConverter;
 import org.jbehave.core.steps.ParameterConverters.StringListConverter;
-import ug.lab.proj160511.steps.CalcSteps;
+import ug.lab.proj6.steps.PhantomSteps;
 
-public class RunCalcTest extends JUnitStories {
+public class RunPhantomTest extends JUnitStories {
 
-	public RunCalcTest() {
+	public RunPhantomTest() {
 		super();
 	}
 
@@ -41,12 +41,12 @@ public class RunCalcTest extends JUnitStories {
 	@Override
 	public InjectableStepsFactory stepsFactory() {
 		// varargs, can have more that one steps classes
-		return new InstanceStepsFactory(configuration(), new CalcSteps());
+		return new InstanceStepsFactory(configuration(), new PhantomSteps());
 	}
 
 	@Override
 	protected List<String> storyPaths() {
-		return Arrays.asList("Zad2_Calc.story");
+		return Arrays.asList("Project.story");
 	}
 
 }

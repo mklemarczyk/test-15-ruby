@@ -1,26 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package ug.lab.proj5.opera;
+package ug.lab.proj6.steps;
 
 import java.io.File;
+import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
-import org.junit.Before;
+import org.jbehave.core.annotations.BeforeScenario;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.opera.OperaOptions;
-import ug.lab.proj5.LoginTest;
 
 /**
  *
  * @author mklem
  */
-public class OperaLoginTest extends LoginTest {
+public class OperaSteps extends MySteps {
 
-	@Before
+	@BeforeScenario
 	@Override
-	public void driverSetup() {
+	public void beforeEachScenario() {
+		variables = new Hashtable<>();
+
 		File file = new File("../libs/operadriver_64.exe");
 		System.setProperty("webdriver.opera.driver", file.getAbsolutePath());
 

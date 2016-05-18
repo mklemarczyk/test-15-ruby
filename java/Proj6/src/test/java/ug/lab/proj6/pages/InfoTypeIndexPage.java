@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ug.lab.proj160511.pages.email;
+package ug.lab.proj6.pages;
 
+import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,25 +15,20 @@ import org.openqa.selenium.support.PageFactory;
  *
  * @author mklem
  */
-public class LoginPage {
+public class InfoTypeIndexPage {
 
-	@FindBy(id = "login_username")
-	private WebElement loginField;
+	@FindBy(linkText = "Create Info Type")
+	public WebElement createButton;
 
-	@FindBy(id = "secretkey")
-	private WebElement passwordField;
+	@FindBy(css = "table tr")
+	public List<WebElement> tableEntries;
 
-	@FindBy(id = "smsubmit")
-	private WebElement loginButton;
-
-	public LoginPage(WebDriver driver) {
+	public InfoTypeIndexPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
 	}
 
-	public void login(String login, String password) {
-		loginField.sendKeys(login);
-		passwordField.sendKeys(password);
-		loginButton.click();
+	public void view(String name) {
+
 	}
 
 }

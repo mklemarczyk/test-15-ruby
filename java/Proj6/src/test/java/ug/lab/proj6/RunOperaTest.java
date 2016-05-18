@@ -1,24 +1,20 @@
-package ug.lab.proj160511;
+package ug.lab.proj6;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
-import org.jbehave.core.steps.InjectableStepsFactory;
-import org.jbehave.core.steps.InstanceStepsFactory;
-import ug.lab.proj160511.steps.OperaEmailSteps;
+import org.jbehave.core.steps.*;
+import org.jbehave.core.steps.ParameterConverters.ParameterConverter;
+import org.jbehave.core.steps.ParameterConverters.StringListConverter;
+import ug.lab.proj6.steps.OperaSteps;
 
-/**
- *
- * @author mklem
- */
-public class RunOperaEmailTest extends JUnitStories {
+public class RunOperaTest extends JUnitStories {
 
-	public RunOperaEmailTest() {
+	public RunOperaTest() {
 		super();
 	}
 
@@ -27,22 +23,30 @@ public class RunOperaEmailTest extends JUnitStories {
 		return new MostUsefulConfiguration()
 				// where to find the stories
 				.useStoryLoader(new LoadFromClasspath())
+				.useParameterConverters(
+						new ParameterConverters().addConverters(customConverters()))
 				// CONSOLE and TXT reporting
 				.useStoryReporterBuilder(
 						new StoryReporterBuilder().withDefaultFormats()
 						.withFormats(Format.CONSOLE, Format.TXT));
 	}
 
+	private ParameterConverter[] customConverters() {
+		List<ParameterConverter> converters = new ArrayList<>();
+		converters.add(new StringListConverter(";"));
+		return converters.toArray(new ParameterConverter[converters.size()]);
+	}
+
 	// Here we specify the steps classes
 	@Override
 	public InjectableStepsFactory stepsFactory() {
 		// varargs, can have more that one steps classes
-		return new InstanceStepsFactory(configuration(), new OperaEmailSteps());
+		return new InstanceStepsFactory(configuration(), new OperaSteps());
 	}
 
 	@Override
 	protected List<String> storyPaths() {
-		return Arrays.asList("Zad3_Email.story");
+		return Arrays.asList("Project.story");
 	}
 
 }

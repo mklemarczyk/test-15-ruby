@@ -1,25 +1,25 @@
-package ug.lab.proj160511.steps;
+package ug.lab.proj6.steps;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
 import org.jbehave.core.annotations.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ug.lab.proj160511.pages.HomePage;
-import ug.lab.proj160511.pages.LoginPage;
+import ug.lab.proj6.pages.HomePage;
+import ug.lab.proj6.pages.LoginPage;
 
-public class LoginSteps {
+public class MySteps {
 
 	protected WebDriver driver;
 
-	protected Dictionary<String, String> credentials;
+	protected Dictionary<String, String> variables;
 
 	@BeforeScenario
 	public void beforeEachScenario() {
-		credentials = new Hashtable<>();
+		variables = new Hashtable<>();
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
@@ -27,6 +27,16 @@ public class LoginSteps {
 	@AfterScenario
 	public void afterAnyScenario() {
 		driver.quit();
+	}
+
+	@When("open home page")
+	public void whenOpenHomePage() {
+		driver.get("http://zsm-eq.azurewebsites.net");
+	}
+
+	@Then("home page is shown")
+	public void thenHomePageIsShown() {
+		assertTrue(driver.findElement(By.tagName("body")).getText().contains("Manadżer sprzętu"));
 	}
 
 	@When("open login page")
@@ -46,15 +56,14 @@ public class LoginSteps {
 
 	@When("$name is empty")
 	public void whenNameIsEmpty(@Named("name") String name) {
-		credentials.put(name, "");
+		variables.put(name, "");
 	}
 
 	@When("login button pressed")
 	public void whenLoginButtonPressed() {
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.login(
-				credentials.get("username"),
-				credentials.get("password"),
+		loginPage.login(variables.get("username"),
+				variables.get("password"),
 				false
 		);
 
@@ -72,7 +81,7 @@ public class LoginSteps {
 
 	@When("$name is given $value")
 	public void whenNameIsGivenValue(@Named("name") String name, @Named("value") String value) {
-		credentials.put(name, value);
+		variables.put(name, value);
 	}
 
 	@Then("invalid username or password error shown")

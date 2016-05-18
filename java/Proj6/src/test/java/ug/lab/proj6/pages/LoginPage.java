@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ug.lab.proj160511.pages;
+package ug.lab.proj6.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

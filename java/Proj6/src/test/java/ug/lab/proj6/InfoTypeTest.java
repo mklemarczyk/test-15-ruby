@@ -3,8 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ug.lab.proj5;
+package ug.lab.proj6;
 
+import ug.lab.proj6.pages.InfoTypeDetailPage;
+import ug.lab.proj6.pages.InfoTypeRow;
+import ug.lab.proj6.pages.LoginPage;
+import ug.lab.proj6.pages.InfoTypeFormPage;
+import ug.lab.proj6.pages.InfoTypeIndexPage;
+import ug.lab.proj6.pages.HomePage;
 import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
 import org.junit.*;
@@ -12,7 +18,6 @@ import org.junit.runners.MethodSorters;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ug.lab.proj5.pages.*;
 
 /**
  *
