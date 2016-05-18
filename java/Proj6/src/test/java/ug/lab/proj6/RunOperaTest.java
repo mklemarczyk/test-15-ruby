@@ -1,12 +1,15 @@
 package ug.lab.proj6;
 
+import java.net.URL;
 import java.util.*;
-import org.jbehave.core.configuration.Configuration;
-import org.jbehave.core.configuration.MostUsefulConfiguration;
+import org.jbehave.core.configuration.*;
+import org.jbehave.core.i18n.LocalizedKeywords;
+import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.junit.JUnitStories;
-import org.jbehave.core.reporters.Format;
-import org.jbehave.core.reporters.StoryReporterBuilder;
+import org.jbehave.core.parsers.RegexStoryParser;
+import org.jbehave.core.reporters.FilePrintStreamFactory.ResolveToSimpleName;
+import org.jbehave.core.reporters.*;
 import org.jbehave.core.steps.*;
 import org.jbehave.core.steps.ParameterConverters.ParameterConverter;
 import org.jbehave.core.steps.ParameterConverters.StringListConverter;
@@ -20,15 +23,28 @@ public class RunOperaTest extends JUnitStories {
 
 	@Override
 	public Configuration configuration() {
-		return new MostUsefulConfiguration()
-				// where to find the stories
+		Locale locale = new Locale("pl");
+		URL codeLocation = CodeLocations.codeLocationFromClass(this.getClass());
+		Keywords keywords = new LocalizedKeywords(locale);
+		Properties properties = new Properties();
+		properties.setProperty("encoding", "UTF-8");
+		Configuration configuration = new MostUsefulConfiguration()
+				.useKeywords(keywords)
+				.useStepCollector(new MarkUnmatchedStepsAsPending(keywords))
+				.useStoryParser(new RegexStoryParser(keywords))
 				.useStoryLoader(new LoadFromClasspath())
 				.useParameterConverters(
 						new ParameterConverters().addConverters(customConverters()))
-				// CONSOLE and TXT reporting
-				.useStoryReporterBuilder(
-						new StoryReporterBuilder().withDefaultFormats()
-						.withFormats(Format.CONSOLE, Format.TXT));
+				.useDefaultStoryReporter(new ConsoleOutput(keywords))
+				.useStoryReporterBuilder(new StoryReporterBuilder()
+						.withCodeLocation(codeLocation)
+						.withPathResolver(new ResolveToSimpleName())
+						.withDefaultFormats()
+						.withFormats(Format.CONSOLE, Format.TXT)
+						.withViewResources(properties)
+						.withFailureTrace(false)
+						.withKeywords(keywords));
+		return configuration;
 	}
 
 	private ParameterConverter[] customConverters() {
@@ -46,7 +62,7 @@ public class RunOperaTest extends JUnitStories {
 
 	@Override
 	protected List<String> storyPaths() {
-		return Arrays.asList("Project.story");
+		return Arrays.asList("ProjectPL.story");
 	}
 
 }

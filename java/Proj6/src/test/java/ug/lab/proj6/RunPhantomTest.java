@@ -46,7 +46,7 @@ public class RunPhantomTest extends JUnitStories {
 
 	@Override
 	protected List<String> storyPaths() {
-		return Arrays.asList("Project.story");
+		return Arrays.asList("Login.story", "InsertAndFind.story");
 	}
 
 }
