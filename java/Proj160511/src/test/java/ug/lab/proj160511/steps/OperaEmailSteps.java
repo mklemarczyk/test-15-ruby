@@ -25,8 +25,10 @@ public class OperaEmailSteps extends EmailSteps {
 		options.setBinary("E:/Data/PortableApps/OperaPortable/App/Opera/36.0.2130.32/Opera.exe");
 		//options.setBinary("E:/Data/PortableApps/OperaPortable/OperaPortable.exe");
 
-		driver = new OperaDriver(options);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driverOne = new OperaDriver(options);
+		driverOne.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driverTwo = new OperaDriver(options);
+		driverTwo.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 	}
 
 }
