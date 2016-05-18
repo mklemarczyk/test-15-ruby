@@ -288,6 +288,7 @@
     <Content Include="Views\Person\Index.cshtml" />
     <Content Include="Views\Person\SortIndex2.cshtml" />
     <Content Include="Views\Person\SortIndex1.cshtml" />
+    <Content Include="Views\Person\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

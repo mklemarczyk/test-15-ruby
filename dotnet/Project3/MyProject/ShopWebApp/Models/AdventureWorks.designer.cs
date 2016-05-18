@@ -33,6 +33,9 @@ namespace ShopWebApp.Models
     partial void InsertPerson(Person instance);
     partial void UpdatePerson(Person instance);
     partial void DeletePerson(Person instance);
+    partial void InsertBusinessEntity(BusinessEntity instance);
+    partial void UpdateBusinessEntity(BusinessEntity instance);
+    partial void DeleteBusinessEntity(BusinessEntity instance);
     #endregion
 		
 		public AdventureWorksDataContext() : 
@@ -72,6 +75,14 @@ namespace ShopWebApp.Models
 				return this.GetTable<Person>();
 			}
 		}
+		
+		public System.Data.Linq.Table<BusinessEntity> BusinessEntities
+		{
+			get
+			{
+				return this.GetTable<BusinessEntity>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="Person.Person")]
@@ -105,6 +116,8 @@ namespace ShopWebApp.Models
 		private System.Guid _rowguid;
 		
 		private System.DateTime _ModifiedDate;
+		
+		private EntityRef<BusinessEntity> _BusinessEntity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -140,6 +153,7 @@ namespace ShopWebApp.Models
 		
 		public Person()
 		{
+			this._BusinessEntity = default(EntityRef<BusinessEntity>);
 			OnCreated();
 		}
 		
@@ -154,6 +168,10 @@ namespace ShopWebApp.Models
 			{
 				if ((this._BusinessEntityID != value))
 				{
+					if (this._BusinessEntity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnBusinessEntityIDChanging(value);
 					this.SendPropertyChanging();
 					this._BusinessEntityID = value;
@@ -399,6 +417,182 @@ namespace ShopWebApp.Models
 					this._ModifiedDate = value;
 					this.SendPropertyChanged("ModifiedDate");
 					this.OnModifiedDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BusinessEntity_Person", Storage="_BusinessEntity", ThisKey="BusinessEntityID", OtherKey="BusinessEntityID", IsForeignKey=true)]
+		public BusinessEntity BusinessEntity
+		{
+			get
+			{
+				return this._BusinessEntity.Entity;
+			}
+			set
+			{
+				BusinessEntity previousValue = this._BusinessEntity.Entity;
+				if (((previousValue != value) 
+							|| (this._BusinessEntity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BusinessEntity.Entity = null;
+						previousValue.Person = null;
+					}
+					this._BusinessEntity.Entity = value;
+					if ((value != null))
+					{
+						value.Person = this;
+						this._BusinessEntityID = value.BusinessEntityID;
+					}
+					else
+					{
+						this._BusinessEntityID = default(int);
+					}
+					this.SendPropertyChanged("BusinessEntity");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="Person.BusinessEntity")]
+	public partial class BusinessEntity : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _BusinessEntityID;
+		
+		private System.Guid _rowguid;
+		
+		private System.DateTime _ModifiedDate;
+		
+		private EntityRef<Person> _Person;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnBusinessEntityIDChanging(int value);
+    partial void OnBusinessEntityIDChanged();
+    partial void OnrowguidChanging(System.Guid value);
+    partial void OnrowguidChanged();
+    partial void OnModifiedDateChanging(System.DateTime value);
+    partial void OnModifiedDateChanged();
+    #endregion
+		
+		public BusinessEntity()
+		{
+			this._Person = default(EntityRef<Person>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BusinessEntityID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int BusinessEntityID
+		{
+			get
+			{
+				return this._BusinessEntityID;
+			}
+			set
+			{
+				if ((this._BusinessEntityID != value))
+				{
+					this.OnBusinessEntityIDChanging(value);
+					this.SendPropertyChanging();
+					this._BusinessEntityID = value;
+					this.SendPropertyChanged("BusinessEntityID");
+					this.OnBusinessEntityIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rowguid", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid rowguid
+		{
+			get
+			{
+				return this._rowguid;
+			}
+			set
+			{
+				if ((this._rowguid != value))
+				{
+					this.OnrowguidChanging(value);
+					this.SendPropertyChanging();
+					this._rowguid = value;
+					this.SendPropertyChanged("rowguid");
+					this.OnrowguidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ModifiedDate", DbType="DateTime NOT NULL")]
+		public System.DateTime ModifiedDate
+		{
+			get
+			{
+				return this._ModifiedDate;
+			}
+			set
+			{
+				if ((this._ModifiedDate != value))
+				{
+					this.OnModifiedDateChanging(value);
+					this.SendPropertyChanging();
+					this._ModifiedDate = value;
+					this.SendPropertyChanged("ModifiedDate");
+					this.OnModifiedDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BusinessEntity_Person", Storage="_Person", ThisKey="BusinessEntityID", OtherKey="BusinessEntityID", IsUnique=true, IsForeignKey=false)]
+		public Person Person
+		{
+			get
+			{
+				return this._Person.Entity;
+			}
+			set
+			{
+				Person previousValue = this._Person.Entity;
+				if (((previousValue != value) 
+							|| (this._Person.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Person.Entity = null;
+						previousValue.BusinessEntity = null;
+					}
+					this._Person.Entity = value;
+					if ((value != null))
+					{
+						value.BusinessEntity = this;
+					}
+					this.SendPropertyChanged("Person");
 				}
 			}
 		}

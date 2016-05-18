@@ -15,6 +15,15 @@
       <Column Name="Demographics" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="rowguid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="BusinessEntity_Person" Member="BusinessEntity" ThisKey="BusinessEntityID" OtherKey="BusinessEntityID" Type="BusinessEntity" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Person.BusinessEntity" Member="BusinessEntities">
+    <Type Name="BusinessEntity">
+      <Column Name="BusinessEntityID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="rowguid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="BusinessEntity_Person" Member="Person" ThisKey="BusinessEntityID" OtherKey="BusinessEntityID" Type="Person" Cardinality="One" />
     </Type>
   </Table>
 </Database>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShopWebApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,12 +13,16 @@ namespace ShopWebApp.Controllers
         {
             ViewBag.Title = "Person Index";
 
-            var pp = new Models.AdventureWorksDataContext();
+            List<Person> list;
 
-            var dat = from item in pp.Persons
-                      select item;
+            using (var pp = new AdventureWorksDataContext())
+            {
+                list = (from item in pp.Persons
+                        orderby item.BusinessEntityID descending
+                        select item).ToList();
+            }
 
-            ViewBag.Persons = dat.Take(100);
+            ViewBag.Persons = list.Take(100);
 
             return View();
         }
@@ -26,16 +31,19 @@ namespace ShopWebApp.Controllers
         {
             ViewBag.Title = "Sorted Person Index";
 
-            var pp = new Models.AdventureWorksDataContext();
+            List<Person> list;
 
-            var dat = (from item in pp.Persons
-                       select item).ToArray();
-
-            var ordered = (from item in dat
-                           orderby item.LastName, item.FirstName
+            using (var pp = new AdventureWorksDataContext())
+            {
+                var dat = (from item in pp.Persons
                            select item).ToArray();
 
-            ViewBag.Persons = ordered.Take(100);
+                list = (from item in dat
+                        orderby item.LastName, item.FirstName
+                        select item).ToList();
+            }
+
+            ViewBag.Persons = list.Take(100);
 
             return View();
         }
@@ -44,32 +52,62 @@ namespace ShopWebApp.Controllers
         {
             ViewBag.Title = "Sorted Person Index";
 
-            var pp = new Models.AdventureWorksDataContext();
+            List<Person> list;
 
-            var dat = (from item in pp.Persons
-                       orderby item.LastName, item.FirstName
-                       select item).ToArray();
-
-            var ordered = (from item in dat
+            using (var pp = new AdventureWorksDataContext())
+            {
+                var dat = (from item in pp.Persons
+                           orderby item.LastName, item.FirstName
                            select item).ToArray();
 
-            ViewBag.Persons = ordered.Take(100);
+                list = (from item in dat
+                        select item).ToList();
+            }
+
+            ViewBag.Persons = list.Take(100);
 
             return View();
         }
 
+        // GET: Planes/Create
         public ActionResult Create()
         {
             ViewBag.Title = "Home Page";
 
-            var pp = new Models.AdventureWorksDataContext();
-
-            var dat = from item in pp.Persons
-                      select item;
-
-            ViewBag.Persons = dat;
-
             return View();
         }
+
+        // POST: Planes/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "FirstName,LastName,Title")] Person person)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var pp = new AdventureWorksDataContext())
+                {
+                    person.ModifiedDate = DateTime.Now;
+                    person.PersonType = "EM";
+                    person.BusinessEntityID = 1;
+
+                    var businessEntity = new BusinessEntity();
+                    businessEntity.ModifiedDate = DateTime.Now;
+                    businessEntity.Person = person;
+
+                    person.BusinessEntity = businessEntity;
+
+                    pp.BusinessEntities.InsertOnSubmit(businessEntity);
+                    pp.Persons.InsertOnSubmit(person);
+                    pp.SubmitChanges();
+                }
+
+                return RedirectToAction("Index");
+            }
+
+            return View(person);
+        }
+
     }
 }
