@@ -8,8 +8,7 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ug.lab.proj6.pages.HomePage;
-import ug.lab.proj6.pages.LoginPage;
+import ug.lab.proj6.pages.*;
 
 public class MySteps {
 
@@ -95,4 +94,36 @@ public class MySteps {
 		HomePage homePage = new HomePage(driver);
 		assertNotNull(homePage.logoutButton);
 	}
+
+	@When("open info types page")
+	public void whenOpenInfoTypesPage() {
+		HomePage homePageAfter = new HomePage(driver);
+		homePageAfter.equipmentButton.click();
+		homePageAfter.infoTypesButton.click();
+	}
+
+	@Then("no results found on index page")
+	public void thenNoResultsFoundOnIndexPage() {
+		InfoTypeIndexPage indexPage = new InfoTypeIndexPage(driver);
+		assertEquals("No results found.", indexPage.tableEntries.get(1).getText());
+	}
+
+	@When("create info type button pressed")
+	public void whenCreateInfoTypeButtonPressed() {
+		InfoTypeIndexPage indexPage = new InfoTypeIndexPage(driver);
+		indexPage.createButton.click();
+	}
+
+	@When("create button pressed")
+	public void whenCreateButtonPressed() {
+		InfoTypeFormPage formPage = new InfoTypeFormPage(driver);
+		formPage.create(variables.get("name"));
+	}
+
+	@Then("info type was created")
+	public void thenInfoTypeWasCreated() {
+		InfoTypeDetailPage detailPage = new InfoTypeDetailPage(driver);
+		assertEquals(variables.get("name"), detailPage.headerText.getText());
+	}
+
 }

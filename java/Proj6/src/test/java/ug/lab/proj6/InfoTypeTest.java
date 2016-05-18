@@ -15,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -141,59 +140,6 @@ public class InfoTypeTest {
 
 		InfoTypeDetailPage afterDetailPage = new InfoTypeDetailPage(driver);
 		assertEquals("Processor speed", afterDetailPage.headerText.getText());
-	}
-
-	@Test
-	public void tc06_testDeleteItem_Deny() {
-		driver.get("http://zsm-eq.azurewebsites.net/");
-
-		HomePage homePage = new HomePage(driver);
-		homePage.loginButton.click();
-
-		LoginPage loginPage = new LoginPage(driver);
-		loginPage.login("admin", "admin", false);
-
-		HomePage homePageAfter = new HomePage(driver);
-		homePageAfter.equipmentButton.click();
-		homePageAfter.infoTypesButton.click();
-
-		InfoTypeIndexPage indexPage = new InfoTypeIndexPage(driver);
-		InfoTypeRow row = new InfoTypeRow(indexPage.tableEntries.get(1));
-		row.deleteButton.click();
-
-		Alert alert = driver.switchTo().alert();
-		alert.dismiss();
-
-		InfoTypeIndexPage indexPageAfter = new InfoTypeIndexPage(driver);
-		InfoTypeRow rowAfter = new InfoTypeRow(indexPageAfter.tableEntries.get(1));
-
-		assertEquals("Processor speed", rowAfter.nameText.getText());
-	}
-
-	@Test
-	public void tc07_testDeleteItem_Confirm() {
-		driver.get("http://zsm-eq.azurewebsites.net/");
-
-		HomePage homePage = new HomePage(driver);
-		homePage.loginButton.click();
-
-		LoginPage loginPage = new LoginPage(driver);
-		loginPage.login("admin", "admin", false);
-
-		HomePage homePageAfter = new HomePage(driver);
-		homePageAfter.equipmentButton.click();
-		homePageAfter.infoTypesButton.click();
-
-		InfoTypeIndexPage indexPage = new InfoTypeIndexPage(driver);
-		InfoTypeRow row = new InfoTypeRow(indexPage.tableEntries.get(0));
-		row.deleteButton.click();
-
-		Alert alert = driver.switchTo().alert();
-		alert.accept();
-
-		InfoTypeIndexPage indexPageAfter = new InfoTypeIndexPage(driver);
-
-		assertEquals("No results found.", indexPageAfter.tableEntries.get(1).getText());
 	}
 
 	@Before
