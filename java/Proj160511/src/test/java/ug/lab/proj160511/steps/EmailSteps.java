@@ -60,7 +60,7 @@ public class EmailSteps {
 	public void thenMessagesArePresent(@Named("n") int n) throws InterruptedException {
 		HomePage homePage = new HomePage(driver);
 		if (homePage.emails.size() != n + 1) {
-			sleep(10000);
+			sleep(100000);
 		}
 		assertEquals(n + 1, homePage.emails.size());
 
