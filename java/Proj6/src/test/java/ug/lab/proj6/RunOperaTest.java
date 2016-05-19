@@ -13,7 +13,7 @@ import org.jbehave.core.reporters.*;
 import org.jbehave.core.steps.*;
 import org.jbehave.core.steps.ParameterConverters.ParameterConverter;
 import org.jbehave.core.steps.ParameterConverters.StringListConverter;
-import ug.lab.proj6.steps.OperaSteps;
+import ug.lab.proj6.steps.OperaStepsPl;
 
 public class RunOperaTest extends JUnitStories {
 
@@ -23,9 +23,10 @@ public class RunOperaTest extends JUnitStories {
 
 	@Override
 	public Configuration configuration() {
+		ClassLoader classLoader = this.getClass().getClassLoader();
 		Locale locale = new Locale("pl");
 		URL codeLocation = CodeLocations.codeLocationFromClass(this.getClass());
-		Keywords keywords = new LocalizedKeywords(locale);
+		Keywords keywords = new LocalizedKeywords(locale, "resources.txt", classLoader);
 		Properties properties = new Properties();
 		properties.setProperty("encoding", "UTF-8");
 		Configuration configuration = new MostUsefulConfiguration()
@@ -57,7 +58,7 @@ public class RunOperaTest extends JUnitStories {
 	@Override
 	public InjectableStepsFactory stepsFactory() {
 		// varargs, can have more that one steps classes
-		return new InstanceStepsFactory(configuration(), new OperaSteps());
+		return new InstanceStepsFactory(configuration(), new OperaStepsPl());
 	}
 
 	@Override

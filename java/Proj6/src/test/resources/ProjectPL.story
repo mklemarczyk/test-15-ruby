@@ -1,25 +1,25 @@
-Scenario: Open home page
-When open home page
-Then home page is shown
+Scenariusz: Otwarto stronę główną
+Gdy otwarto stronę główną
+To strona główna jest wyświetlona
 
-Scenario: Login with empty
-When open login page
-And username is empty
-And password is empty
-And login button pressed
-Then blank username error shown
-And blank password error shown
+Scenariusz: Logowanie pustymi danymi
+Gdy otwarto stronę logowania
+Oraz username jest pusty
+Oraz password jest pusty
+Oraz naciśnięto przycisk login
+To komunikat pusty username wyświetlono
+Oraz komunikat pusty password wyświetlono
 
-Scenario: Login with wrong credentials
-When open login page
-And username is given test1
-And password is given test1
-And login button pressed
-Then invalid username or password error shown
+Scenariusz: Logowanie z nieprawidłowymi danymi
+Gdy open login page
+Oraz username podano jako test1
+Oraz password podano jako test1
+Oraz naciśnięto przycisk login
+To komunikat niepoprawne username lub password wyświetlono
 
-Scenario: Login with valid credentials
-When open login page
-And username is given admin
-And password is given admin
-And login button pressed
-Then user is logged
+Scenariusz: Logowanie z prawidłowymi danymi
+Gdy open login page
+Oraz username podano jako admin
+Oraz password podano jako admin
+Oraz naciśnięto przycisk login
+To użytkownika zalogowano
