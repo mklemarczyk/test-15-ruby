@@ -26,7 +26,7 @@ public class RunOperaTest extends JUnitStories {
 		ClassLoader classLoader = this.getClass().getClassLoader();
 		Locale locale = new Locale("pl");
 		URL codeLocation = CodeLocations.codeLocationFromClass(this.getClass());
-		Keywords keywords = new LocalizedKeywords(locale, "resources.txt", classLoader);
+		Keywords keywords = new LocalizedKeywords(locale); //new LocalizedKeywords(locale, "resources.txt", classLoader);
 		Properties properties = new Properties();
 		properties.setProperty("encoding", "UTF-8");
 		Configuration configuration = new MostUsefulConfiguration()

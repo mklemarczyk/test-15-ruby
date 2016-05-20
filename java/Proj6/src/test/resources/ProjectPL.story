@@ -1,25 +1,25 @@
 Scenariusz: Otwarto stronę główną
 Gdy otwarto stronę główną
-To strona główna jest wyświetlona
+Wtedy strona główna jest wyświetlona
 
 Scenariusz: Logowanie pustymi danymi
 Gdy otwarto stronę logowania
-Oraz username jest pusty
-Oraz password jest pusty
-Oraz naciśnięto przycisk login
-To komunikat pusty username wyświetlono
-Oraz komunikat pusty password wyświetlono
+I username jest pusty
+I password jest pusty
+I naciśnięto przycisk login
+Wtedy komunikat pusty username wyświetlono
+I komunikat pusty password wyświetlono
 
 Scenariusz: Logowanie z nieprawidłowymi danymi
-Gdy open login page
-Oraz username podano jako test1
-Oraz password podano jako test1
-Oraz naciśnięto przycisk login
-To komunikat niepoprawne username lub password wyświetlono
+Gdy otwarto stronę logowania
+I username podano jako test1
+I password podano jako test1
+I naciśnięto przycisk login
+Wtedy komunikat niepoprawne username lub password wyświetlono
 
 Scenariusz: Logowanie z prawidłowymi danymi
-Gdy open login page
-Oraz username podano jako admin
-Oraz password podano jako admin
-Oraz naciśnięto przycisk login
-To użytkownika zalogowano
+Gdy otwarto stronę logowania
+I username podano jako admin
+I password podano jako admin
+I naciśnięto przycisk login
+Wtedy użytkownika zalogowano

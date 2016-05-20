@@ -27,7 +27,7 @@ public class OperaStepsPl {
 		System.setProperty("webdriver.opera.driver", file.getAbsolutePath());
 
 		OperaOptions options = new OperaOptions();
-		options.setBinary("E:/Data/PortableApps/OperaPortable/App/Opera/36.0.2130.32/Opera.exe");
+		options.setBinary("E:/Data/PortableApps/OperaPortable/App/Opera/37.0.2178.43/Opera.exe");
 		//options.setBinary("E:/Data/PortableApps/OperaPortable/OperaPortable.exe");
 
 		driver = new OperaDriver(options);
