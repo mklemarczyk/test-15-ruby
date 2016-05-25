@@ -1,0 +1,19 @@
+CREATE TABLE Authors (
+  id_author INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  FirstName VARCHAR NULL,
+  LastName VARCHAR NULL,
+  PRIMARY KEY(id_author)
+);
+
+CREATE TABLE Books(
+  id_book INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  Title VARCHAR NOT NULL,
+  Year INTEGER UNSIGNED NULL,
+  PRIMARY KEY(id_book)
+);
+
+CREATE TABLE Books_has_authors(
+  Books_id_book INTEGER UNSIGNED NOT NULL,
+  Authors_id_author INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY(Books_id_book, Authors_id_author)
+);
