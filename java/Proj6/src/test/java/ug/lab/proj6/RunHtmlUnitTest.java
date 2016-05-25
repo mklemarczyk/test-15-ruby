@@ -10,11 +10,11 @@ import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.*;
 import org.jbehave.core.steps.ParameterConverters.ParameterConverter;
 import org.jbehave.core.steps.ParameterConverters.StringListConverter;
-import ug.lab.proj6.steps.PhantomSteps;
+import ug.lab.proj6.steps.HtmlUnitSteps;
 
-public class RunPhantomTest extends JUnitStories {
+public class RunHtmlUnitTest extends JUnitStories {
 
-	public RunPhantomTest() {
+	public RunHtmlUnitTest() {
 		super();
 	}
 
@@ -41,12 +41,12 @@ public class RunPhantomTest extends JUnitStories {
 	@Override
 	public InjectableStepsFactory stepsFactory() {
 		// varargs, can have more that one steps classes
-		return new InstanceStepsFactory(configuration(), new PhantomSteps());
+		return new InstanceStepsFactory(configuration(), new HtmlUnitSteps());
 	}
 
 	@Override
 	protected List<String> storyPaths() {
-		return Arrays.asList("Login.story", "InsertAndFind.story");
+		return Arrays.asList("Login.story");
 	}
 
 }
