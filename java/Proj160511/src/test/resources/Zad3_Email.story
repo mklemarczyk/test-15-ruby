@@ -9,7 +9,7 @@ Then 0 messages are present
 Scenario: Login with valid credentials
 When open login page
 And username is given mklemarczyk
-And password is given <password>
+And password is given q1W@e3R$t5Y^
 And login button pressed
 Then user is logged
 
